@@ -5,13 +5,31 @@
 #include <string.h>
 #include <stdlib.h>
 #include <stdlib.h>
+#include <algorithm>
 #include "inf_int.h"
 
 using namespace std;
 
 int main()
 {
-	inf_int a, b, c, d;
+	inf_int a;
+	inf_int b;
+	inf_int c;
+
+	for (int i = 0; i < 20; i++)
+	{
+		a.digits.push_back(6);
+		b.digits.push_back(7);
+	}
+
+	c = a + b;
+
+	for (int i = 0; i < c.digits.size(); i++)
+	{
+		cout << c.digits[i] << ' ';
+	}
+
+	//inf_int a, b, c, d;
 	//inf_int a, e;
 	//inf_int b(100);
 	//inf_int c("321111111111122222222222233333333333444444444445555555555");
@@ -21,10 +39,10 @@ int main()
 
 	// cin >> g ;   // not required
 
-	a = b * c;
+	//a = b * c;
 	// e=g/f;       // not required
 
-	b = c - d;
+	//b = c - d;
 
 
 	//if (f == d) {
