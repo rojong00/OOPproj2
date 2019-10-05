@@ -7,7 +7,7 @@ using namespace std;
 
 class inf_int
 {
-private:
+public: // initializer 구현후, private로 바꾸면서 main.cpp의 선언을 바꾸어주면 된다.
 	char* digits;
 	unsigned int length;
 	bool thesign;   // true if positive , false if negative.
@@ -36,6 +36,9 @@ public:
 
 	friend ostream& operator<<(ostream&, const inf_int&);
 	// friend istream& operator>>(istream& , inf_int&);    // not required
+
+	void Adder(const inf_int&, const inf_int&);
+	void Subtractor(const inf_int&, const inf_int&);
 };
 
 #endif
