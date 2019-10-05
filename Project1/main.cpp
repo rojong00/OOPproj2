@@ -16,13 +16,17 @@ int main()
 	inf_int b;
 	inf_int c;
 
-	for (int i = 0; i < 20; i++)
+	for (int i = 0; i < 8; i++)
 	{
-		a.digits.push_back(6);
-		b.digits.push_back(7);
+		a.digits.push_back(7);
 	}
 
-	c = a + b;
+	for (int i = 0; i < 8; i++)
+	{
+		b.digits.push_back(i);
+	}
+
+	c = a - b;
 
 	for (int i = 0; i < c.digits.size(); i++)
 	{
