@@ -27,10 +27,11 @@ int main()
 	}
 
 	c = a - b;
+	unsigned int num = 6;
 
-	for (int i = 0; i < c.digits.size(); i++)
+	for (unsigned int i = 0; i < c.digits.size(); i++)
 	{
-		cout << c.digits[i] << ' ';
+		cout << c.digits[num-i] << ' ';
 	}
 
 	//inf_int a, b, c, d;

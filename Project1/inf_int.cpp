@@ -16,10 +16,31 @@ inf_int::inf_int() // 일단 필요해서 가져다씀, 추후 구현완료시 수정함
  {
 	 // inf int c 생성d
 	 inf_int c;
+	 // 아랫부분(operator -)에 겹치는게 많아서 리팩토링 과정에서 Thesign_selector 함수를 따로 뺄 예정, 지금은 그냥 놔둠
 	 // 만약 a와 b의 thesign이 같다면 부호를 저장하고, c.Adder 호출
-	 c.Adder(a, b);
+	 if (a.thesign == b.thesign)
+	 {
+		 c.thesign = a.thesign;
+		// a 와 b중 절댓값이 큰것을 앞에 호출
+		 if (true) // a의 절댓값이 b보다 크다면
+			 c.Adder(a, b);
+		 else if (false) // b의 절댓값이 a보다 크다면
+			 c.Adder(b, a);
+	 }
 	 // a와 b의 thesign이 다르다면 부호를 저장하고, Subtractor 호출
-
+	 else
+	 {
+		 if (true) // a의 절댓값이 b보다 크다면
+		 {
+			 c.thesign = a.thesign;
+			 c.Subtractor(a, b);
+		 }
+		 else if (false)
+		 {
+			 c.thesign = !a.thesign; // b의 절댓값이 a보다 크다면
+			 c.Subtractor(b, a);
+		 }
+	 }
 	 return c;
  }
 
@@ -28,7 +49,32 @@ inf_int::inf_int() // 일단 필요해서 가져다씀, 추후 구현완료시 수정함
 	 // inf int c 생성
 	 inf_int c;
 	 // a 와 b의 thesign이 같다면 부호를 저장하고, c.Subtractor 호출
-	 c.Subtractor(a, b);
+	 if (a.thesign == b.thesign)
+	 {
+		 if (true) // a의 절댓값이 b보다 크다면
+		 {
+			 c.thesign = a.thesign;
+			 c.Subtractor(a, b);
+		 }
+		 else if (false) // b의 절댓값이 a보다 크다면
+		 {
+			 c.thesign = !a.thesign; 
+			 c.Subtractor(b, a);
+		 }
+	 }
+	 else
+	 {
+		 if (true) // a의 절댓값이 b보다 크다면
+		 {
+			 c.thesign = a.thesign;
+			 c.Adder(a, b);
+		 }
+		 else if (false) // b의 절댓값이 a보다 크다면
+		 {
+			 c.thesign = a.thesign; 
+			 c.Adder(b, a);
+		 }
+	 }
 	 // a 와 b의 thesign이 다르다면 부호를 저장하고, Adder 호출
 
 	 return c;
