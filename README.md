@@ -9,3 +9,4 @@ OOP team project #2
 ## 한거
 
 ### - sudo code 끄적임
+### - 1차구현(+, -)
