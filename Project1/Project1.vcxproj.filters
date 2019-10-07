@@ -18,7 +18,10 @@
     <ClCompile Include="main.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="inf_int.cpp">
+    <ClCompile Include="inf_int_other.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="inf_int_arithmatic.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>

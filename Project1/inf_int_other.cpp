@@ -91,7 +91,8 @@ inf_int::inf_int(const inf_int& c){
 void inf_int::show(){
   	int len=this->digits.size();
     cout<<"num :";
-  	for(int i=0;i<len;i++) cout<<this->digits[i];
+	if (this->thesign == false) cout << '-';
+  	for(int i=len-1;i>=0;i--) cout<<this->digits[i];
     cout<<'\n';
 }
 
