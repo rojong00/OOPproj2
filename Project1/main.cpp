@@ -16,7 +16,6 @@ int main()
 	inf_int g(f);
 	
 	b.show();
-	d.show();
 
 	return 0;
 }
