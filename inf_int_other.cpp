@@ -50,10 +50,10 @@ inf_int::inf_int(const char *str){
     int tmp=count;
     for(int p=0;p<tmp+1;p++){
       int tmp_num_len=0;
-      unsigned int tmp_num=0;
+      int tmp_num=0;
       string tmp_str=strg.substr(8*count,8);
       tmp_num_len=tmp_str.length();
-      tmp_num=(unsigned int)stoi(tmp_str);
+      tmp_num=(int)stoi(tmp_str);
       for(int k=0;k<tmp_num_len;k++){
         this->digits.push_back(tmp_num%10);
         tmp_num=(int)tmp_num/10;
@@ -62,9 +62,9 @@ inf_int::inf_int(const char *str){
     }
   }else{
     int tmp_num_len=0;
-    unsigned int tmp_num=0;
+    int tmp_num=0;
     tmp_num_len=strg.length();
-    tmp_num=(unsigned int)stoi(strg);
+    tmp_num=(int)stoi(strg);
     for(int k=0;k<tmp_num_len;k++){
       this->digits.push_back(tmp_num%10);
       tmp_num=(int)tmp_num/10;
