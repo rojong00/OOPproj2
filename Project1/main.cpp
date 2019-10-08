@@ -9,18 +9,18 @@ using namespace std;
 int main()
 {
 
-	inf_int a("321111111111745555555");
-	inf_int b("937896");
+	inf_int a("992534236324623649");
+	inf_int b("55555544");
 	inf_int c(1234678972);
 
 	
-	bool test1 = a > b;
-	bool test2 = c > b;
-	inf_int test3 = a + b;
+	//bool test1 = a > b;
+	//bool test2 = c > b;
+	//inf_int test3 = a + b;
 
-	cout << test1 << endl;
-	cout << test2 << endl;
-	test3.show();
+	//cout << test1 << endl;
+	//cout << test2 << endl;
+	//test3.show();
 
 	return 0;
 }
