@@ -36,6 +36,7 @@ public :
     friend inf_int operator+(const inf_int& , const inf_int&);
     friend inf_int operator-(const inf_int& , const inf_int&);
     friend inf_int operator*(const inf_int& , const inf_int&);
+	bool Abstract_compair(const inf_int a, const inf_int b);
 
     friend ostream& operator<<(ostream& , const inf_int&);
 };

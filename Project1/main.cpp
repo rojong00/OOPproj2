@@ -9,7 +9,7 @@ using namespace std;
 int main()
 {
 
-	inf_int a("32111111111112222222223745555555");
+	inf_int a("321111111111745555555");
 	inf_int b("937896");
 	inf_int c(1234678972);
 

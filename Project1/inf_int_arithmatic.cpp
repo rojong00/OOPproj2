@@ -135,3 +135,31 @@ void inf_int::Subtractor(const inf_int& a, const inf_int& b)
 
 	// this를 이용하여 호출한 object를 직접수정하였으므로, 반환 불필요
 }
+
+bool inf_int::Abstract_compair(const inf_int a, const inf_int b)
+{
+	// a와 b의 절댓값을 비교.
+	// 앞에(a)가 같거나 크면 true, 뒤에(b)가 크면 false 반환
+
+	// a 길이가 b 길이보다 길면 true 반환
+	if (a.length > b.length)
+		return true;
+	// b 길이가 a 길이보다 길면 false 반환
+	else if (a.length < b.length)
+		return false;
+
+	// a 길이와 b 길이가 같으면
+	else if (a.length == b.length)
+	{
+		for (int i = a.length - 1; i >= 0; i--)
+		{
+			// 큰 숫자부터 시작해서 차근차근 비교후, 가장 빨리 큰 숫자가 큼
+			if (a.digits[i] > b.digits[i])
+				return true;
+			else if (a.digits[i] < b.digits[i])
+				return false;
+		}
+		// 두 수의 절댓값이 크면 true 반환
+		return true;
+	}
+}
