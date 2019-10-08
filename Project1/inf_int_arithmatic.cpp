@@ -5,6 +5,9 @@ inf_int operator+(const inf_int& a, const inf_int& b)
 {
 	// inf int c 생성d
 	inf_int c;
+	// c에 들어있는 초깃값 0 없애기
+	c.digits.pop_back();
+
 	// 아랫부분(operator -)에 겹치는게 많아서 리팩토링 과정에서 Thesign_selector 함수를 따로 뺄 예정, 지금은 그냥 놔둠
 	// 만약 a와 b의 thesign이 같다면 부호를 저장하고, c.Adder 호출
 	if (a.thesign == b.thesign)
