@@ -9,8 +9,8 @@ using namespace std;
 int main()
 {
 
-	inf_int a("0");
-	inf_int b("0");
+	inf_int a("1234124123412341234123412412341324214312342");
+	inf_int b("111188888888587587484");
 	inf_int c(1234678972);
 
 	
