@@ -1,51 +1,83 @@
+//written by ImHyeongJun
+
 #include "inf_int.h"
+
+
+inf_int operator*(const inf_int& a, const inf_int& b)
+{
+	// inf int c ìƒì„±d
+	inf_int c;
+	// cì— ë“¤ì–´ìˆëŠ” ì´ˆê¹ƒê°’ 0 ì—†ì• ê¸°
+	c.digits.pop_back();
+
+	//ë§Œì•½ aì™€ bì˜ ë¶€í˜¸ê°€ ê°™ìœ¼ë©´ cì˜ ë¶€í˜¸ëŠ” +, ì•„ë‹ˆë©´ -
+	if (a.thesign == b.thesign)
+		c.thesign = true;
+	else
+		c.thesign = false;
+
+	return c;
+}
 
 
 inf_int operator+(const inf_int& a, const inf_int& b)
 {
-	// inf int c »ı¼ºd
+	// inf int c ìƒì„±d
 	inf_int c;
-	// ¾Æ·§ºÎºĞ(operator -)¿¡ °ãÄ¡´Â°Ô ¸¹¾Æ¼­ ¸®ÆÑÅä¸µ °úÁ¤¿¡¼­ Thesign_selector ÇÔ¼ö¸¦ µû·Î »¬ ¿¹Á¤, Áö±İÀº ±×³É ³öµÒ
-	// ¸¸¾à a¿Í bÀÇ thesignÀÌ °°´Ù¸é ºÎÈ£¸¦ ÀúÀåÇÏ°í, c.Adder È£Ãâ
+	// cì— ë“¤ì–´ìˆëŠ” ì´ˆê¹ƒê°’ 0 ì—†ì• ê¸°
+	c.digits.pop_back();
+
+	// aì˜ ì ˆëŒ“ê°’ì´ ë” í¬ë©´ true, ì•„ë‹ˆë©´ false
+	bool abs_cmp = c.Abstract_compair(a, b);
+
+	// ì•„ë«ë¶€ë¶„(operator -)ì— ê²¹ì¹˜ëŠ”ê²Œ ë§ì•„ì„œ ë¦¬íŒ©í† ë§ ê³¼ì •ì—ì„œ Thesign_selector í•¨ìˆ˜ë¥¼ ë”°ë¡œ ëº„ ì˜ˆì •, ì§€ê¸ˆì€ ê·¸ëƒ¥ ë†”ë‘ 
+	// ë§Œì•½ aì™€ bì˜ thesignì´ ê°™ë‹¤ë©´ ë¶€í˜¸ë¥¼ ì €ì¥í•˜ê³ , c.Adder í˜¸ì¶œ
 	if (a.thesign == b.thesign)
 	{
 		c.thesign = a.thesign;
-		// a ¿Í bÁß Àı´ñ°ªÀÌ Å«°ÍÀ» ¾Õ¿¡ È£Ãâ
-		if (true) // aÀÇ Àı´ñ°ªÀÌ bº¸´Ù Å©´Ù¸é
+		// a ì™€ bì¤‘ ì ˆëŒ“ê°’ì´ í°ê²ƒì„ ì•ì— í˜¸ì¶œ
+		if (abs_cmp == 1) // aì˜ ì ˆëŒ“ê°’ì´ bë³´ë‹¤ í¬ë‹¤ë©´
 			c.Adder(a, b);
-		else if (false) // bÀÇ Àı´ñ°ªÀÌ aº¸´Ù Å©´Ù¸é
+		else if (abs_cmp == 0) // bì˜ ì ˆëŒ“ê°’ì´ aë³´ë‹¤ í¬ë‹¤ë©´
 			c.Adder(b, a);
 	}
-	// a¿Í bÀÇ thesignÀÌ ´Ù¸£´Ù¸é ºÎÈ£¸¦ ÀúÀåÇÏ°í, Subtractor È£Ãâ
+	// aì™€ bì˜ thesignì´ ë‹¤ë¥´ë‹¤ë©´ ë¶€í˜¸ë¥¼ ì €ì¥í•˜ê³ , Subtractor í˜¸ì¶œ
 	else
 	{
-		if (true) // aÀÇ Àı´ñ°ªÀÌ bº¸´Ù Å©´Ù¸é
+		if (abs_cmp == 1) // aì˜ ì ˆëŒ“ê°’ì´ bë³´ë‹¤ í¬ë‹¤ë©´
 		{
 			c.thesign = a.thesign;
 			c.Subtractor(a, b);
 		}
-		else if (false)
+		else if (abs_cmp == 0)
 		{
-			c.thesign = !a.thesign; // bÀÇ Àı´ñ°ªÀÌ aº¸´Ù Å©´Ù¸é
+			c.thesign = !a.thesign; // bì˜ ì ˆëŒ“ê°’ì´ aë³´ë‹¤ í¬ë‹¤ë©´
 			c.Subtractor(b, a);
 		}
 	}
 	return c;
 }
 
+
 inf_int operator-(const inf_int& a, const inf_int& b)
 {
-	// inf int c »ı¼º
+	// inf int c ìƒì„±
 	inf_int c;
-	// a ¿Í bÀÇ thesignÀÌ °°´Ù¸é ºÎÈ£¸¦ ÀúÀåÇÏ°í, c.Subtractor È£Ãâ
+	// cì— ë“¤ì–´ìˆëŠ” ì´ˆê¹ƒê°’ 0 ì—†ì• ê¸°
+	c.digits.pop_back();
+
+	// aì˜ ì ˆëŒ“ê°’ì´ ë” í¬ë©´ true, ì•„ë‹ˆë©´ false
+	bool abs_cmp = c.Abstract_compair(a, b);
+
+	// a ì™€ bì˜ thesignì´ ê°™ë‹¤ë©´ ë¶€í˜¸ë¥¼ ì €ì¥í•˜ê³ , c.Subtractor í˜¸ì¶œ
 	if (a.thesign == b.thesign)
 	{
-		if (true) // aÀÇ Àı´ñ°ªÀÌ bº¸´Ù Å©´Ù¸é
+		if (abs_cmp == 1) // aì˜ ì ˆëŒ“ê°’ì´ bë³´ë‹¤ í¬ë‹¤ë©´
 		{
 			c.thesign = a.thesign;
 			c.Subtractor(a, b);
 		}
-		else if (false) // bÀÇ Àı´ñ°ªÀÌ aº¸´Ù Å©´Ù¸é
+		else if (abs_cmp == 0) // bì˜ ì ˆëŒ“ê°’ì´ aë³´ë‹¤ í¬ë‹¤ë©´
 		{
 			c.thesign = !a.thesign;
 			c.Subtractor(b, a);
@@ -53,26 +85,27 @@ inf_int operator-(const inf_int& a, const inf_int& b)
 	}
 	else
 	{
-		if (true) // aÀÇ Àı´ñ°ªÀÌ bº¸´Ù Å©´Ù¸é
+		if (abs_cmp == 1) // aì˜ ì ˆëŒ“ê°’ì´ bë³´ë‹¤ í¬ë‹¤ë©´
 		{
 			c.thesign = a.thesign;
 			c.Adder(a, b);
 		}
-		else if (false) // bÀÇ Àı´ñ°ªÀÌ aº¸´Ù Å©´Ù¸é
+		else if (abs_cmp == 0) // bì˜ ì ˆëŒ“ê°’ì´ aë³´ë‹¤ í¬ë‹¤ë©´
 		{
 			c.thesign = a.thesign;
 			c.Adder(b, a);
 		}
 	}
-	// a ¿Í bÀÇ thesignÀÌ ´Ù¸£´Ù¸é ºÎÈ£¸¦ ÀúÀåÇÏ°í, Adder È£Ãâ
+	// a ì™€ bì˜ thesignì´ ë‹¤ë¥´ë‹¤ë©´ ë¶€í˜¸ë¥¼ ì €ì¥í•˜ê³ , Adder í˜¸ì¶œ
 
 	return c;
 }
 
+
 void inf_int::Adder(const inf_int& a, const inf_int& b)
 {
-	// a°¡ bº¸´Ù Àı´ñ°ªÀÌ Å©´Ù°í °¡Á¤(Àı´ñ°ª ºñ±³ÇÔ¼ö ±¸ÇöµÇ¸é ¼öÁ¤ ¿¹Á¤)
-	// c¿¡ a¿Í b¸¦ ´õÇØ°¡¸ç ÀúÀå
+	// aê°€ bë³´ë‹¤ ì ˆëŒ“ê°’ì´ í¬ë‹¤ê³  ê°€ì •(ì ˆëŒ“ê°’ ë¹„êµí•¨ìˆ˜ êµ¬í˜„ë˜ë©´ ìˆ˜ì • ì˜ˆì •)
+	// cì— aì™€ bë¥¼ ë”í•´ê°€ë©° ì €ì¥
 	for (unsigned int idxa = 0; idxa < a.digits.size(); idxa++)
 	{
 		this->digits.push_back(a.digits[idxa]);
@@ -80,14 +113,14 @@ void inf_int::Adder(const inf_int& a, const inf_int& b)
 			this->digits[idxa] += b.digits[idxa];
 	}
 
-	// ÇÕ»êµÈ º¤ÅÍÀÇ index 0ºÎÅÍ ½ÃÀÛÇØ¼­ 10º¸´Ù Å«°Í Ã³¸®
+	// í•©ì‚°ëœ ë²¡í„°ì˜ index 0ë¶€í„° ì‹œì‘í•´ì„œ 10ë³´ë‹¤ í°ê²ƒ ì²˜ë¦¬
 	for (unsigned int next, counter = 0; counter < this->digits.size(); counter++)
 	{
 		if (this->digits[counter] >= 10)
 		{
 			this->digits[counter] -= 10;
-			next = counter + 1; // ¿À¹öÇÃ·Î¿ì ¹æÁö¿ë
-			//¸¸¾à ¸¶Áö¸· ÀÚ¸®°¡ 10º¸´Ù Å©´Ù¸é 
+			next = counter + 1; // ì˜¤ë²„í”Œë¡œìš° ë°©ì§€ìš©
+			//ë§Œì•½ ë§ˆì§€ë§‰ ìë¦¬ê°€ 10ë³´ë‹¤ í¬ë‹¤ë©´ 
 			if (next != this->digits.size())
 				this->digits[next] += 1;
 			else
@@ -95,20 +128,21 @@ void inf_int::Adder(const inf_int& a, const inf_int& b)
 		}
 	}
 
-	// this¸¦ ÀÌ¿ëÇÏ¿© È£ÃâÇÑ object¸¦ Á÷Á¢¼öÁ¤ÇÏ¿´À¸¹Ç·Î, ¹İÈ¯ ºÒÇÊ¿ä
+	// thisë¥¼ ì´ìš©í•˜ì—¬ í˜¸ì¶œí•œ objectë¥¼ ì§ì ‘ìˆ˜ì •í•˜ì˜€ìœ¼ë¯€ë¡œ, ë°˜í™˜ ë¶ˆí•„ìš”
 }
+
 
 void inf_int::Subtractor(const inf_int& a, const inf_int& b)
 {
-	//a °¡ bº¸´Ù Àı´ñ°ªÀÌ Å©´Ù°í °¡Á¤(Àı´ñ°ª ºñ±³ÇÔ¼ö ±¸ÇöµÇ¸é ¼öÁ¤ ¿¹Á¤)
-	// c¿¡ a¿Í b¸¦ »©°¡¸ç ÀúÀå
+	//a ê°€ bë³´ë‹¤ ì ˆëŒ“ê°’ì´ í¬ë‹¤ê³  ê°€ì •(ì ˆëŒ“ê°’ ë¹„êµí•¨ìˆ˜ êµ¬í˜„ë˜ë©´ ìˆ˜ì • ì˜ˆì •)
+	// cì— aì™€ bë¥¼ ë¹¼ê°€ë©° ì €ì¥
 	for (unsigned int idxa = 0; idxa < a.digits.size(); idxa++)
 	{
 		this->digits.push_back(a.digits[idxa]);
 		if (idxa < b.digits.size())
 			this->digits[idxa] -= b.digits[idxa];
 	}
-	// Â÷»êµÈ º¤ÅÍÀÇ index 0ºÎÅÍ ½ÃÀÛÇÏ¿© 0º¸´Ù ÀÛÀº°Í Ã³¸®
+	// ì°¨ì‚°ëœ ë²¡í„°ì˜ index 0ë¶€í„° ì‹œì‘í•˜ì—¬ 0ë³´ë‹¤ ì‘ì€ê²ƒ ì²˜ë¦¬
 	for (unsigned int next, counter = 0; counter < this->digits.size(); counter++)
 	{
 		if (this->digits[counter] < 0)
@@ -118,9 +152,10 @@ void inf_int::Subtractor(const inf_int& a, const inf_int& b)
 			this->digits[next] -= 1;
 		}
 	}
-	// »©±â¿¡¼­´Â °¡Àå Å« ÀÚ¸®µéÀÌ ¿¬¼ÓµÈ 0ÀÏ ¼ö ÀÖÀ¸´Ï, Ã¼Å©ÈÄ Á¦°Å
 
-	while (1)
+	// ë¹¼ê¸°ì—ì„œëŠ” ê°€ì¥ í° ìë¦¬ë“¤ì´ ì—°ì†ëœ 0ì¼ ìˆ˜ ìˆìœ¼ë‹ˆ, ì²´í¬í›„ ì œê±°
+	// ë§Œì•½ ëº€ ê°’ì´ 0ì´ë©´ 0ë“¤ì´ ë‹¤ ì‚¬ë¼ì ¸ë²„ë¦¬ëŠ”ê²ƒ ë°©ì§€
+	while (this->digits.size() > 1)
 	{
 		if (this->digits.back() == 0)
 		{
@@ -130,5 +165,34 @@ void inf_int::Subtractor(const inf_int& a, const inf_int& b)
 			break;
 	}
 
-	// this¸¦ ÀÌ¿ëÇÏ¿© È£ÃâÇÑ object¸¦ Á÷Á¢¼öÁ¤ÇÏ¿´À¸¹Ç·Î, ¹İÈ¯ ºÒÇÊ¿ä
+	// thisë¥¼ ì´ìš©í•˜ì—¬ í˜¸ì¶œí•œ objectë¥¼ ì§ì ‘ìˆ˜ì •í•˜ì˜€ìœ¼ë¯€ë¡œ, ë°˜í™˜ ë¶ˆí•„ìš”
+}
+
+
+bool inf_int::Abstract_compair(const inf_int a, const inf_int b)
+{
+	// aì™€ bì˜ ì ˆëŒ“ê°’ì„ ë¹„êµ.
+	// ì•ì—(a)ê°€ ê°™ê±°ë‚˜ í¬ë©´ true, ë’¤ì—(b)ê°€ í¬ë©´ false ë°˜í™˜
+
+	// a ê¸¸ì´ê°€ b ê¸¸ì´ë³´ë‹¤ ê¸¸ë©´ true ë°˜í™˜
+	if (a.length > b.length)
+		return true;
+	// b ê¸¸ì´ê°€ a ê¸¸ì´ë³´ë‹¤ ê¸¸ë©´ false ë°˜í™˜
+	else if (a.length < b.length)
+		return false;
+
+	// a ê¸¸ì´ì™€ b ê¸¸ì´ê°€ ê°™ìœ¼ë©´
+	else if (a.length == b.length)
+	{
+		for (int i = a.length - 1; i >= 0; i--)
+		{
+			// í° ìˆ«ìë¶€í„° ì‹œì‘í•´ì„œ ì°¨ê·¼ì°¨ê·¼ ë¹„êµí›„, ê°€ì¥ ë¹¨ë¦¬ í° ìˆ«ìê°€ í¼
+			if (a.digits[i] > b.digits[i])
+				return true;
+			else if (a.digits[i] < b.digits[i])
+				return false;
+		}
+		// ë‘ ìˆ˜ì˜ ì ˆëŒ“ê°’ì´ í¬ë©´ true ë°˜í™˜
+		return true;
+	}
 }

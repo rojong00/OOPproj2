@@ -104,9 +104,9 @@ void inf_int::Show(){                            // if vector is empty or has 0,
     cout<<"num : ";
     if(this->thesign==false) cout<<"-";          // if the sign is negative, attach -. and arrage its vector element in right order and cout
     for(int i=len-1;i>=0;i--) cout<<this->digits.at(i);
-    cout<<'\n';
   }
 }
+  
 
 
 
