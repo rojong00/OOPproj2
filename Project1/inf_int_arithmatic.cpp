@@ -1,6 +1,23 @@
 #include "inf_int.h"
 
 
+inf_int operator*(const inf_int& a, const inf_int& b)
+{
+	// inf int c 생성d
+	inf_int c;
+	// c에 들어있는 초깃값 0 없애기
+	c.digits.pop_back();
+
+	//만약 a와 b의 부호가 같으면 c의 부호는 +, 아니면 -
+	if (a.thesign == b.thesign)
+		c.thesign = true;
+	else
+		c.thesign = false;
+
+	return c;
+}
+
+
 inf_int operator+(const inf_int& a, const inf_int& b)
 {
 	// inf int c 생성d
@@ -8,26 +25,29 @@ inf_int operator+(const inf_int& a, const inf_int& b)
 	// c에 들어있는 초깃값 0 없애기
 	c.digits.pop_back();
 
+	// a의 절댓값이 더 크면 true, 아니면 false
+	bool abs_cmp = c.Abstract_compair(a, b);
+
 	// 아랫부분(operator -)에 겹치는게 많아서 리팩토링 과정에서 Thesign_selector 함수를 따로 뺄 예정, 지금은 그냥 놔둠
 	// 만약 a와 b의 thesign이 같다면 부호를 저장하고, c.Adder 호출
 	if (a.thesign == b.thesign)
 	{
 		c.thesign = a.thesign;
 		// a 와 b중 절댓값이 큰것을 앞에 호출
-		if (true) // a의 절댓값이 b보다 크다면
+		if (abs_cmp == 1) // a의 절댓값이 b보다 크다면
 			c.Adder(a, b);
-		else if (false) // b의 절댓값이 a보다 크다면
+		else if (abs_cmp == 0) // b의 절댓값이 a보다 크다면
 			c.Adder(b, a);
 	}
 	// a와 b의 thesign이 다르다면 부호를 저장하고, Subtractor 호출
 	else
 	{
-		if (true) // a의 절댓값이 b보다 크다면
+		if (abs_cmp == 1) // a의 절댓값이 b보다 크다면
 		{
 			c.thesign = a.thesign;
 			c.Subtractor(a, b);
 		}
-		else if (false)
+		else if (abs_cmp == 0)
 		{
 			c.thesign = !a.thesign; // b의 절댓값이 a보다 크다면
 			c.Subtractor(b, a);
@@ -36,19 +56,26 @@ inf_int operator+(const inf_int& a, const inf_int& b)
 	return c;
 }
 
+
 inf_int operator-(const inf_int& a, const inf_int& b)
 {
 	// inf int c 생성
 	inf_int c;
+	// c에 들어있는 초깃값 0 없애기
+	c.digits.pop_back();
+
+	// a의 절댓값이 더 크면 true, 아니면 false
+	bool abs_cmp = c.Abstract_compair(a, b);
+
 	// a 와 b의 thesign이 같다면 부호를 저장하고, c.Subtractor 호출
 	if (a.thesign == b.thesign)
 	{
-		if (true) // a의 절댓값이 b보다 크다면
+		if (abs_cmp == 1) // a의 절댓값이 b보다 크다면
 		{
 			c.thesign = a.thesign;
 			c.Subtractor(a, b);
 		}
-		else if (false) // b의 절댓값이 a보다 크다면
+		else if (abs_cmp == 0) // b의 절댓값이 a보다 크다면
 		{
 			c.thesign = !a.thesign;
 			c.Subtractor(b, a);
@@ -56,12 +83,12 @@ inf_int operator-(const inf_int& a, const inf_int& b)
 	}
 	else
 	{
-		if (true) // a의 절댓값이 b보다 크다면
+		if (abs_cmp == 1) // a의 절댓값이 b보다 크다면
 		{
 			c.thesign = a.thesign;
 			c.Adder(a, b);
 		}
-		else if (false) // b의 절댓값이 a보다 크다면
+		else if (abs_cmp == 0) // b의 절댓값이 a보다 크다면
 		{
 			c.thesign = a.thesign;
 			c.Adder(b, a);
@@ -71,6 +98,7 @@ inf_int operator-(const inf_int& a, const inf_int& b)
 
 	return c;
 }
+
 
 void inf_int::Adder(const inf_int& a, const inf_int& b)
 {
@@ -101,6 +129,7 @@ void inf_int::Adder(const inf_int& a, const inf_int& b)
 	// this를 이용하여 호출한 object를 직접수정하였으므로, 반환 불필요
 }
 
+
 void inf_int::Subtractor(const inf_int& a, const inf_int& b)
 {
 	//a 가 b보다 절댓값이 크다고 가정(절댓값 비교함수 구현되면 수정 예정)
@@ -121,9 +150,10 @@ void inf_int::Subtractor(const inf_int& a, const inf_int& b)
 			this->digits[next] -= 1;
 		}
 	}
-	// 빼기에서는 가장 큰 자리들이 연속된 0일 수 있으니, 체크후 제거
 
-	while (1)
+	// 빼기에서는 가장 큰 자리들이 연속된 0일 수 있으니, 체크후 제거
+	// 만약 뺀 값이 0이면 0들이 다 사라져버리는것 방지
+	while (this->digits.size() > 1)
 	{
 		if (this->digits.back() == 0)
 		{
@@ -135,6 +165,7 @@ void inf_int::Subtractor(const inf_int& a, const inf_int& b)
 
 	// this를 이용하여 호출한 object를 직접수정하였으므로, 반환 불필요
 }
+
 
 bool inf_int::Abstract_compair(const inf_int a, const inf_int b)
 {

@@ -86,6 +86,8 @@ inf_int::inf_int(const inf_int& c){
 void inf_int::show(){
   	int len=this->digits.size();
     cout<<"num :";
+	if (this->thesign == 0)
+		cout << '-';
   	for(int i=len-1;i>=0;i--) cout<<this->digits.at(i);
     cout<<'\n';
 }
